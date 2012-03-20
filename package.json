@@ -1,0 +1,15 @@
+{
+  "author": "vol4ok <hello@vol4ok.net>",
+  "name": "mvc.js",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/vol4ok/mvc.js.git"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
