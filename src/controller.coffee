@@ -1,15 +1,14 @@
 class Controller extends Module
-  @extend Events
-  
-  idCounter: 0
+  @extend $.EventEmitter
   cidPrefix: 'ctr'
-  _uniqueId: (prefix) -> @cidPrefix + @idCounter++
   
   constructor: (options) ->
-    @cid = options?.cid ? @_uniqueId()
-    root.registerObject(@cid, this)
-    
-  on_domReady
+    @cid = options?.cid ? $.uniqId(@cidPrefix)
+    registerObject(@cid, this)
+    @_setup(@setup)
+    $.on 'loaded', => 
+      @_import(@imports)
+      @_delegateEvents(@events)
   
   _delegateEvents: (events) ->
     return unless events
@@ -22,7 +21,7 @@ class Controller extends Module
     return unless controllers
     for id, ctx of controllers
       ctx.options.cid = id
-      new root.getClassByName(ctx[0])(ctx[1])
+      new getClassByName(ctx[0])(ctx[1])
 
   _import: (objects) ->
     return unless objects

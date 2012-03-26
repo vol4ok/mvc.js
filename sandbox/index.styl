@@ -1,0 +1,17 @@
+@import ui
+
+$toolbarHeight = 50px
+$sidebarWidth  = 150px
+
+#toolbar
+  absolute: top left right
+  height: $toolbarHeight
+  background: GRAYDARK
+  
+#sidebar
+  absolute: top $toolbarHeight left bottom
+  width: $sidebarWidth
+  background: GRAYLIGHT
+  
+#content-view
+  absolute: top $toolbarHeight left $sidebarWidth right bottom
