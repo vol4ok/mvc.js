@@ -1,0 +1,20 @@
+#CSON
+
+$plugins: 
+  $type: "plugin"
+  plugins: [ './_build/exec.nbplug/exec.nbplug.coffee', './_build/coffee.nbplug/coffee.nbplug.coffee', './_build/jslink.nbproj/jslink.nbplug.coffee']
+
+build:
+  coffee:
+    $type: "coffee"
+    src: "src"
+    dst: "_int"
+    coffeeOptions: 
+      bare: yes
+      utilities: no
+  link:
+    $type: "jslink"
+    src: '_int/mvc.js'
+    dst: 'lib'
+    compress: no
+    wrapNs: yes
