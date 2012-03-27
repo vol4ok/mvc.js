@@ -1,10 +1,11 @@
 class Controller extends Module
-  @extend $.EventEmitter
+  @include $.EventEmitter::
   cidPrefix: 'ctr'
   
   constructor: (options) ->
-    @cid = options?.cid ? $.uniqId(@cidPrefix)
+    @cid ?= options?.cid ? $.uniqId(@cidPrefix)
     registerObject(@cid, this)
+    console.log @
     @_setup(@setup)
     $.on 'loaded', => 
       @_import(@imports)

@@ -1,27 +1,29 @@
-$ ->
-  console.log 'hello'
-  
-# class App extends mvc.Application
-#   @cid: 'app'
-# 
-#   imports:
-#     toolbar: 'toolbar'
-#     sidebar: 'sidebar'
-#     content: 'content-view'
-# 
-#   events:
-#     'search-block show': 'search select'
-# 
-#   setup:
-#     'ad-list-controller':   [ 'AdListCtr', {} ]
-#     'search-controller':    [ 'SearchCtr', {} ]
-#     'new-ad-controller':    [ 'ModalCtr', {modal: 'new-ad-modal', button: 'new-ad-button'} ]
-#     'pref-controller':      [ 'ModalCtr', {modal: 'pref-modal', button: 'pref-button'} ]
-#     'followers-controller': [ 'ModalCtr', {modal: 'followers-modal', button: 'followers-button'}]
-# 
-#   constructor: (options = {}) ->
-#     super
-#     
-#   on_domLoad: ->
-#     super
-#   
+class Toolbar extends Controller
+  constructor: (options) ->
+    @cid = options.el.id
+    super
+
+class Sidebar extends Controller
+  constructor: (options) ->
+    @cid = options.el.id
+    super
+    
+class ContentView extends Controller
+  constructor: (options) ->
+    @cid = options.el.id
+    super
+
+class App extends mvc.Application
+  imports:
+    toolbar: 'toolbar'
+    sidebar: 'sidebar'
+    content: 'content-view'
+  events: {}
+  setup: {}
+
+  constructor: (options = {}) ->
+    @cid = 'app'
+    super
+
+mvc.registerClasses({Toolbar, Sidebar, ContentView, App})
+new App

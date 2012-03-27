@@ -11,7 +11,6 @@ require('zappa').run 3004, ->
     dest: __dirname
     force: true 
     compress: yes
-    debug: yes
     
   @use (req, res, next) ->
     htmlRE = /\.(html|htm)*$/

@@ -220,5 +220,5 @@ body{margin:0;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:
 a{color:#08c;text-decoration:none}
 a:hover{color:#0074ad;text-decoration:underline}
 #toolbar{position:absolute;top:0;left:0;right:0;height:50px;background:#333}
-#sidebar{position:absolute;top:50px;left:0;bottom:0;width:150px;background:#999}
-#content-view{position:absolute;top:50px;left:150px;right:0;bottom:0}
+#sidebar{position:absolute;top:50px;left:0;bottom:0;width:250px;background:#999}
+#content-view{position:absolute;top:50px;left:250px;right:0;bottom:0}

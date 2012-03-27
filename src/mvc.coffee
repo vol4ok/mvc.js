@@ -34,4 +34,7 @@ $.extend exports, {
   registerClasses
   getObjectById
   getClassByName
+  #debug
+  $__objects
+  $__classes
 }
