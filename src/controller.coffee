@@ -1,11 +1,9 @@
 class Controller extends Module
   @include $.EventEmitter::
   cidPrefix: 'ctr'
-  
   constructor: (options) ->
     @cid ?= options?.cid ? $.uniqId(@cidPrefix)
     registerObject(@cid, this)
-    console.log @
     @_setup(@setup)
     $.on 'loaded', => 
       @_import(@imports)
@@ -16,13 +14,13 @@ class Controller extends Module
     for src, trg  of events
       [srcId, event]  = src.split(' ')
       [trgId, method] = trg.split(' ')
-      $$(srcId).bind(event, $$(trgId)[method], $$(trgId))
+      $$(srcId).on(event, $$(trgId)[method])
 
   _setup: (controllers) ->
     return unless controllers
     for id, ctx of controllers
-      ctx.options.cid = id
-      new getClassByName(ctx[0])(ctx[1])
+      ctx[1].cid = id
+      new (getClassByName(ctx[0]))(ctx[1])
 
   _import: (objects) ->
     return unless objects

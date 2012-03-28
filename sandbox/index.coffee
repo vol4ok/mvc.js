@@ -1,29 +1,54 @@
-class Toolbar extends Controller
+class Toolbar extends mvc.View
+  @registerClass 'Toolbar'
+  
+  events:
+    'click': 'on_click'
   constructor: (options) ->
-    @cid = options.el.id
+    super
+  on_click: (e) ->
+    @emit('click', e)
+
+
+class Sidebar extends mvc.View
+  @registerClass 'Sidebar'
+  events:
+    'mouseenter': 'on_mouseenter'
+  constructor: (options) ->
+    super
+  on_mouseenter: (e) ->
+    console.log 'on_mouseenter', e
+
+
+class ContentView extends mvc.View
+  @registerClass 'ContentView'
+  constructor: (options) ->
     super
 
-class Sidebar extends Controller
-  constructor: (options) ->
-    @cid = options.el.id
-    super
     
-class ContentView extends Controller
+class SomeController extends mvc.Controller
+  @registerClass 'SomeController'
+  imports:
+    toolbar: 'toolbar'
+    sidebar: 'sidebar'
   constructor: (options) ->
-    @cid = options.el.id
     super
+    @test = options.test
+  message: (e) =>
+    console.log @test, 'click!', e
+
 
 class App extends mvc.Application
   imports:
     toolbar: 'toolbar'
     sidebar: 'sidebar'
     content: 'content-view'
-  events: {}
-  setup: {}
-
+    someCtr: 'some-controller'
+  events: 
+    'toolbar click': 'some-controller message'
+  setup:
+    'some-controller': [ 'SomeController', {test: "ololo"} ]
   constructor: (options = {}) ->
     @cid = 'app'
     super
 
-mvc.registerClasses({Toolbar, Sidebar, ContentView, App})
 new App

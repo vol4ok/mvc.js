@@ -17,7 +17,7 @@ $.on 'load', -> $.defer -> $.emit('loaded')
 __embed('module.js')
 __embed('controller.js')
 # __embed('model.js')
-# __embed('view.js')
+__embed('view.js')
 # __embed('collection.js')
 __embed('application.js')
 
@@ -25,7 +25,7 @@ $.extend exports, {
   Module
   Controller
   # Model
-  # View
+  View
   # Collection
   Application
   registerObject

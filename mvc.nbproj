@@ -6,11 +6,9 @@ $plugins:
 
 build:
   coffee:
-    $type: "coffee"
-    src: "src"
-    dst: "_int"
-    coffeeOptions: 
-      bare: yes
+    $type: "exec"
+    exec: [ "mkdir -p _int", "coffee -b -o _int src" ]
+    
   link:
     $type: "jslink"
     src: '_int/mvc.js'
