@@ -12,9 +12,9 @@ class Controller extends Module
   _delegateEvents: (events) ->
     return unless events
     for src, trg  of events
-      [srcId, event]  = src.split(' ')
-      [trgId, method] = trg.split(' ')
-      $$(srcId).on(event, $$(trgId)[method])
+      [srcObj, event]  = if (t = src.split(' ')).length is 1 then [this, t[0]] else [$$(t[0]), t[1]]
+      [trgObj, method] = if (t = trg.split(' ')).length is 1 then [this, t[0]] else [$$(t[0]), t[1]]
+      srcObj.on(event, trgObj[method])
 
   _setup: (controllers) ->
     return unless controllers

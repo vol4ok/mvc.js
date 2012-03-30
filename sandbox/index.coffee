@@ -2,7 +2,7 @@ class Toolbar extends mvc.View
   @registerClass 'Toolbar'
   
   events:
-    'click': 'on_click'
+    'click #test': 'on_click'
   constructor: (options) ->
     super
   on_click: (e) ->

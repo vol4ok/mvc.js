@@ -11,7 +11,7 @@
     Toolbar.registerClass('Toolbar');
 
     Toolbar.prototype.events = {
-      'click': 'on_click'
+      'click #test': 'on_click'
     };
 
     function Toolbar(options) {
