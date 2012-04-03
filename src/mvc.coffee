@@ -35,6 +35,7 @@ $.extend exports, {
   getObjectById
   getClassByName
   #debug
+  $$
   $__objects
   $__classes
 }

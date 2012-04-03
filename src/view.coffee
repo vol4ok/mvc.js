@@ -5,7 +5,7 @@ class View extends Controller
   eventSplitter: /^(\S+)\s*(.*)$/
   tag: 'div'
   
-  constructor: (options = {}) ->  
+  constructor: (options = {}) -> 
     for key, value of options when key in viewOptions
       @[key] = value
     unless @el
@@ -18,12 +18,12 @@ class View extends Controller
       @el = $(@el)
     @cid ?= options.id or @el.attr('id') or $.uniqId(@cidPrefix)
     registerObject(@cid, this)
-    @data = @el.data()
-    @events = $.extend {}, @constructor.events, @events
-    $.on 'loaded', => 
-      @_import(@imports)
-      @_delegateEvents(@events)
-      @refreshElements() if @elements
+    @data = @el.data() or {}
+    @_initializeMixins()
+    @_setupControllers(@setup)
+    @import(@imports)
+    @delegateEvents(@events)
+    @refreshElements(@elements)
     
 
   release: (callback) => 
@@ -32,11 +32,12 @@ class View extends Controller
       
   $: (selector) -> $(selector, @el)
   
-  refreshElements: ->
-    for key, value of @elements
-      @[value] = @$(key)
+  refreshElements: (elements) ->
+    return unless elements
+    for key, value of elements
+      @[key] = @$(value)
 
-  _delegateEvents: (events) ->
+  delegateEvents: (events) ->
     return unless events
     for key, method of events
       unless typeof(method) is 'function'

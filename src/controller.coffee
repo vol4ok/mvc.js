@@ -1,27 +1,31 @@
 class Controller extends Module
   @include $.EventEmitter::
   cidPrefix: 'ctr'
+  
   constructor: (options) ->
     @cid ?= options?.cid ? $.uniqId(@cidPrefix)
     registerObject(@cid, this)
-    @_setup(@setup)
+    @_setupControllers(@setup)
     $.on 'loaded', => 
-      @_import(@imports)
-      @_delegateEvents(@events)
+      @import(@imports)
+      @delegateEvents(@events)
   
-  _delegateEvents: (events) ->
+  delegateEvents: (events) ->
     return unless events
     for src, trg  of events
       [srcObj, event]  = if (t = src.split(' ')).length is 1 then [this, t[0]] else [$$(t[0]), t[1]]
       [trgObj, method] = if (t = trg.split(' ')).length is 1 then [this, t[0]] else [$$(t[0]), t[1]]
       srcObj.on(event, trgObj[method])
 
-  _setup: (controllers) ->
+  _setupControllers: (controllers) ->
     return unless controllers
     for id, ctx of controllers
       ctx[1].cid = id
       new (getClassByName(ctx[0]))(ctx[1])
 
-  _import: (objects) ->
-    return unless objects
-    @[name] = $$(id) for name, id of objects
+  import: (imports) ->
+    return unless imports
+    if $.isArray(imports)
+      @[$.camelize(id)] = $$(id) for id in imports
+    else
+      @[name] = $$(id) for name, id of imports
