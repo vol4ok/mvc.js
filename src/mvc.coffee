@@ -1,5 +1,4 @@
 module 'mvc'
-include 'core.js'
 
 $__objects = {}
 $__classes = {}
@@ -14,12 +13,12 @@ getClassByName = (name) -> $__classes[name]
 $ -> $.emit('load')
 $.on 'load', -> $.defer -> $.emit('loaded')
 
-__embed('module.js')
-__embed('controller.js')
-# __embed('model.js')
-__embed('view.js')
-# __embed('collection.js')
-__embed('application.js')
+LINK_AND_EMBED('_module')
+LINK_AND_EMBED('_controller')
+# EMBED('_model')
+LINK_AND_EMBED('_view')
+# EMBED('_collection')
+LINK_AND_EMBED('_application')
 
 $.extend exports, {
   Module
