@@ -1,0 +1,6 @@
+.npmignore
+*.coffee
+.DS_Store
+.git*
+src
+Cakefile
