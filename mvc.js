@@ -41,7 +41,7 @@ $.ns([ "./mvc", "mvc" ], function(exports) {
     });
   });
   var Module, moduleKeywords;
-  moduleKeywords = [ "included", "extended" ];
+  moduleKeywords = [ "included", "extended", "mixins" ];
   Module = function() {
     Module.name = "Module";
     Module.registerClass = function(name) {
@@ -86,19 +86,19 @@ $.ns([ "./mvc", "mvc" ], function(exports) {
         throw "mixin(klass) requires klass";
       }
       this.include(klass.prototype);
-      if ((_base = this.prototype)._mixins == null) {
-        _base._mixins = {};
+      if ((_base = this.prototype).mixins == null) {
+        _base.mixins = {};
       }
-      if (!this.prototype._mixins[this.name]) {
+      if (!this.prototype.mixins[this.name]) {
         t = {};
-        _ref = this.prototype._mixins;
+        _ref = this.prototype.mixins;
         for (key in _ref) {
           val = _ref[key];
           $.extend(t, val);
         }
-        this.prototype._mixins[this.name] = t;
+        this.prototype.mixins[this.name] = t;
       }
-      this.prototype._mixins[this.name][klass.name] = klass;
+      this.prototype.mixins[this.name][klass.name] = klass;
       return this;
     };
     Module.proxy = function(func) {
@@ -118,10 +118,10 @@ $.ns([ "./mvc", "mvc" ], function(exports) {
     }
     Module.prototype._initializeMixins = function() {
       var ctor, key, _ref, _results;
-      if (!this._mixins) {
+      if (!this.mixins) {
         return;
       }
-      _ref = this._mixins[this.__className];
+      _ref = this.mixins[this.__className];
       _results = [];
       for (key in _ref) {
         ctor = _ref[key];
@@ -245,8 +245,10 @@ $.ns([ "./mvc", "mvc" ], function(exports) {
       } else {
         this.el = $(this.el);
       }
+      this.raw = this.el[0];
+      this.raw.view = this;
       if (this.cid == null) {
-        this.cid = options.id || this.el.attr("id") || $.uniqId(this.cidPrefix);
+        this.cid = options.cid || options.id || this.el.attr("id") || $.uniqId(this.cidPrefix);
       }
       registerObject(this.cid, this);
       this.data = this.el.data() || {};
@@ -289,7 +291,9 @@ $.ns([ "./mvc", "mvc" ], function(exports) {
         match = key.match(this.eventSplitter);
         eventName = match[1];
         selector = match[2];
-        if (selector === "") {
+        if (selector === "document") {
+          _results.push($(document).on(eventName, method));
+        } else if (selector === "") {
           _results.push(this.el.on(eventName, method));
         } else {
           _results.push(this.el.delegate(selector, eventName, method));
@@ -305,17 +309,13 @@ $.ns([ "./mvc", "mvc" ], function(exports) {
     Application.name = "Application";
     Application.prototype._initAutoloadObjects = function(classList) {
       var _this = this;
-      return $(".autoload").each(function(i, _el) {
-        var el, _ref, _ref1;
-        try {
-          el = $(_el);
-          el.removeClass("autoload");
-          new (getClassByName(el.data("class")))({
-            el: _el
-          });
-        } catch (exc) {
-          console.error("Could not initialize a view with class: " + ((_ref = _el.id) != null ? _ref : "undefined") + " and id: " + ((_ref1 = _el["data-class"]) != null ? _ref1 : "undefined") + ". " + exc.toString());
-        }
+      return $(".autoload").each(function(_el, i) {
+        var el;
+        el = $(_el);
+        el.removeClass("autoload");
+        new (getClassByName(el.data("class")))({
+          el: _el
+        });
       });
     };
     function Application(options) {

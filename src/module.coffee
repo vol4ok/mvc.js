@@ -1,4 +1,4 @@
-moduleKeywords = ['included', 'extended']
+moduleKeywords = ['included', 'extended', 'mixins']
 
 class Module
   @registerClass: (name) -> 
@@ -22,13 +22,13 @@ class Module
   @mixin: (klass) ->
     throw('mixin(klass) requires klass') unless klass
     @include(klass::)
-    @::_mixins ?= {}
-    unless @::_mixins[@name]
+    @::mixins ?= {}
+    unless @::mixins[@name]
       t = {}
-      for key,val of @::_mixins
+      for key,val of @::mixins
         $.extend(t,val)
-      @::_mixins[@name] = t
-    @::_mixins[@name][klass.name] = klass
+      @::mixins[@name] = t
+    @::mixins[@name][klass.name] = klass
     return this
 
   @proxy: (func) ->
@@ -41,8 +41,8 @@ class Module
     @_initializeMixins(arguments...)
   
   _initializeMixins: ->
-    return unless @_mixins
-    ctor.apply(this, arguments) for key,ctor of @_mixins[@__className]
+    return unless @mixins
+    ctor.apply(this, arguments) for key,ctor of @mixins[@__className]
     
   getClassByName: (name) -> getClassByName(name)
   getObjectById: (name) -> getObjectById(name)

@@ -16,7 +16,9 @@ class View extends Controller
       @el.attr(@attributes) if @attributes
     else
       @el = $(@el)
-    @cid ?= options.id or @el.attr('id') or $.uniqId(@cidPrefix)
+    @raw = @el[0]
+    @raw.view = this
+    @cid ?= options.cid or options.id or @el.attr('id') or $.uniqId(@cidPrefix)
     registerObject(@cid, this)
     @data = @el.data() or {}
     @_initializeMixins()
@@ -45,7 +47,9 @@ class View extends Controller
       match      = key.match(@eventSplitter)
       eventName  = match[1]
       selector   = match[2]
-      if selector is ''
+      if selector is 'document'
+        $(document).on(eventName, method)
+      else if selector is ''
         @el.on(eventName, method)
       else
         @el.delegate(selector, eventName, method)
