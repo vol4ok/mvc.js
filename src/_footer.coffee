@@ -11,8 +11,13 @@ $.extend exports, {
   registerClasses
   getObjectById
   getClassByName
+  registerTemplate
+  registerTemplateEngine
+  renderTemplate
   #debug
   $$
-  $__objects
-  $__classes
+  $T
+  __objects
+  __classes
+  __templates
 }

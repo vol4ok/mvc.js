@@ -46,4 +46,4 @@ class Module
     
   getClassByName: (name) -> getClassByName(name)
   getObjectById: (name) -> getObjectById(name)
-  $$: (name) -> getObjectById(name)
+  $$: getObjectById

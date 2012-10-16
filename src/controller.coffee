@@ -20,6 +20,7 @@ class Controller extends Module
   _setupControllers: (controllers) ->
     return unless controllers
     for id, ctx of controllers
+      ctx[1] = {} if ctx.length < 2
       ctx[1].cid = id
       new (getClassByName(ctx[0]))(ctx[1])
 

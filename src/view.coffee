@@ -18,7 +18,7 @@ class View extends Controller
       @el = $(@el)
     @raw = @el[0]
     @raw.view = this
-    @cid ?= options.cid or options.id or @el.attr('id') or $.uniqId(@cidPrefix)
+    @cid ?= options.cid or options.id or @el.attr('id') or @el.data('cid') or $.uniqId(@cidPrefix)
     registerObject(@cid, this)
     @data = @el.data() or {}
     @_initializeMixins()
@@ -33,6 +33,8 @@ class View extends Controller
     @el.remove()
       
   $: (selector) -> $(selector, @el)
+
+  _renderTemplate: renderTemplate
   
   refreshElements: (elements) ->
     return unless elements
