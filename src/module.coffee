@@ -47,3 +47,5 @@ class Module
   getClassByName: (name) -> getClassByName(name)
   getObjectById: (name) -> getObjectById(name)
   $$: getObjectById
+
+exports.Module = Module

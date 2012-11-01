@@ -30,3 +30,5 @@ class Controller extends Module
       @[$.camelize(id)] = $$(id) for id in imports
     else
       @[name] = $$(id) for name, id of imports
+
+exports.Controller = Controller

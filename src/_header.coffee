@@ -23,3 +23,20 @@ $.on 'load', -> $.defer -> $.emit('loaded')
 # get = (opt) -> __options[opt]
 # enable = (opt) -> __options[opt] = true
 # disable = (opt) -> __options[opt] = false
+
+$.extend exports, {
+  registerObject
+  registerClass
+  registerObjects
+  registerClasses
+  getObjectById
+  getClassByName
+  registerTemplate
+  registerTemplateEngine
+  renderTemplate
+  $$
+  $T
+  __objects
+  __classes
+  __templates
+}

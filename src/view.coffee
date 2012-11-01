@@ -56,3 +56,4 @@ class View extends Controller
       else
         @el.delegate(selector, eventName, method)
   
+exports.View = View
